@@ -34,3 +34,8 @@
 **Ziele:**
 - Die Dokumentation ist übersichtlich, gut strukturiert und prägnant.
 - Die Tests sind vollständig dokumentiert und beweisen die Zuverlässigkeit des Services.
+
+### GitHub Accounts
+- Nils: https://github.com/PythonIschKeiProgrammiersproch
+- Mitja: https://github.com/MitjaCH
+- Linus: https://github.com/Linussl
