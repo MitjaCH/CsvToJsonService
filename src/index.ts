@@ -1,3 +1,14 @@
+/*
+ * The actual conversion code, this code can handle multiple types of csv.
+ * made by Nils
+ 
+▒▒▒▒▒▒▐███████▌▒▒▒▒▒▒
+▒▒▒▒▒▒▐░▀░▀░▀░▌▒▒▒▒▒▒
+▒▒▒▒▒▒▐▄▄▄▄▄▄▄▌▒▒▒▒▒▒
+▄▀▀▀█▒▐░▀▀▄▀▀░▌▒█▀▀▀▄
+▌▌▌▌▐▒▄▌░▄▄▄░▐▄▒▌▐▐▐▐
+ */
+
 function csvToJson(csv: string): any[] {
   const lines = csv.split('\n').filter(line => line.trim() !== '');
 
