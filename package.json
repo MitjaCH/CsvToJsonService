@@ -20,6 +20,7 @@
   "dependencies": {
     "@types/node": "^22.10.1",
     "aws-sdk": "^2.1692.0",
+    "csvtojson": "^2.0.10",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   },

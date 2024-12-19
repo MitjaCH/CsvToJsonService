@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e  # Exit on error
 
 # Variables
 REGION="us-east-1"
@@ -31,10 +30,10 @@ aws lambda create-function \
   --function-name ${LAMBDA_FUNCTION_NAME} \
   --runtime nodejs18.x \
   --role ${ROLE_ARN} \
-  --handler index.lambdaHandler \
+  --handler dist/index.handler \
   --zip-file fileb://${ZIP_FILE} \
   --region ${REGION} \
-  --environment "Variables={OUTPUT_BUCKET=${OUT_BUCKET_NAME}}"
+  --environment "Variables={INPUT_BUCKET=${IN_BUCKET_NAME},OUTPUT_BUCKET=${OUT_BUCKET_NAME}}"
 
 echo "Lambda function ${LAMBDA_FUNCTION_NAME} created."
 
@@ -46,7 +45,7 @@ aws lambda add-permission \
   --statement-id s3invoke \
   --action "lambda:InvokeFunction" \
   --source-arn arn:aws:s3:::${IN_BUCKET_NAME} \
-  --source-account 474281778567
+  --source-account $(aws sts get-caller-identity --query Account --output text)
 
 # Wait for permissions to propagate
 echo "Waiting 5 seconds for permissions to propagate..."
@@ -67,3 +66,7 @@ echo "Lambda trigger added: Uploads to ${IN_BUCKET_NAME} will be automatically p
 echo "Setup complete!"
 echo "In-Bucket: ${IN_BUCKET_NAME}"
 echo "Out-Bucket: ${OUT_BUCKET_NAME}"
+
+# Verify bucket notification configuration
+echo "Verifying bucket notification configuration..."
+aws s3api get-bucket-notification-configuration --bucket ${IN_BUCKET_NAME}

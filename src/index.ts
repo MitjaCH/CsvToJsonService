@@ -1,60 +1,65 @@
-import { S3 } from 'aws-sdk';
-import { Context, S3Event } from 'aws-lambda';
+import * as AWS from 'aws-sdk';
+import * as csv from 'csvtojson';
 
-export const lambdaHandler = async (event: S3Event, context: Context): Promise<void> => {
-    const s3 = new S3();
+const s3 = new AWS.S3();
 
-    const inBucket = event.Records[0].s3.bucket.name;
-    const inKey = decodeURIComponent(event.Records[0].s3.object.key);
-    const outBucket = process.env.OUTPUT_BUCKET;
-
-    if (!outBucket) {
-        console.error("OUTPUT_BUCKET environment variable is not set.");
-        return;
-    }
-
-    const outKey = inKey.replace(/\\.csv$/, '.json');
-
+export const handler = async (event: any): Promise<void> => {
     try {
-        const response = await s3.getObject({ Bucket: inBucket, Key: inKey }).promise();
+        const inputBucket = process.env.INPUT_BUCKET;
+        const outputBucket = process.env.OUTPUT_BUCKET;
+        const outputFileKeyPrefix = process.env.OUTPUT_FILE_PREFIX || 'converted';
 
-        if (!response.Body) {
-            throw new Error("The S3 object body is empty.");
+        if (!inputBucket || !outputBucket) {
+            throw new Error('INPUT_BUCKET and OUTPUT_BUCKET environment variables must be set.');
         }
 
-        const content = response.Body.toString('utf-8');
-        const rows = content.trim().split('\n');
+        const record = event.Records[0];
+        const inputKey = record.s3.object.key;
 
-        if (rows.length < 2) {
-            throw new Error("The CSV file contains no data rows.");
+        console.log(`Processing file from bucket: ${inputBucket}, key: ${inputKey}`);
+
+        // Fetch the CSV file from the input bucket
+        const csvData = await s3
+            .getObject({
+                Bucket: inputBucket,
+                Key: inputKey,
+            })
+            .promise();
+
+        if (!csvData.Body) {
+            throw new Error('The fetched file has no content.');
         }
 
-        const headers = rows[0].split(',').map(h => h.trim());
-        const jsonData = rows.slice(1)
-            .filter(row => row.trim() !== '')
-            .map(row => {
-                const values = row.split(',');
-                return headers.reduce((acc, header, index) => {
-                    acc[header] = values[index]?.trim() || null;
-                    return acc;
-                }, {} as Record<string, string | null>);
-            });
+        const csvContent = csvData.Body.toString('utf-8');
+        console.log(`Fetched CSV content (truncated to 500 characters):\n${csvContent.slice(0, 500)}...`);
 
-        if (jsonData.length === 0) {
-            throw new Error("The CSV file was parsed but contains no valid data.");
-        }
+        // Detect the delimiter (comma or semicolon)
+        const commaCount = (csvContent.match(/,/g) || []).length;
+        const semicolonCount = (csvContent.match(/;/g) || []).length;
+        const delimiter = commaCount >= semicolonCount ? ',' : ';';
 
-        const jsonString = JSON.stringify(jsonData, null, 2);
+        console.log(`Detected delimiter: '${delimiter}'`);
 
-        await s3.putObject({
-            Bucket: outBucket,
-            Key: outKey,
-            Body: jsonString,
-            ContentType: 'application/json',
-        }).promise();
+        // Convert CSV to JSON
+        const jsonArray = await csv({ delimiter }).fromString(csvContent);
 
-        console.log(`CSV ${inKey} converted to JSON and uploaded to ${outBucket}/${outKey}`);
-    } catch (error) {
-        console.error(`Error processing file ${inKey} from bucket ${inBucket}:`, error);
+        console.log(`Converted JSON structure:`, jsonArray);
+
+        const outputKey = `${outputFileKeyPrefix}/${inputKey.replace(/\.csv$/i, '.json')}`;
+
+        // Upload the JSON file to the output bucket
+        await s3
+            .putObject({
+                Bucket: outputBucket,
+                Key: outputKey,
+                Body: JSON.stringify(jsonArray, null, 2),
+                ContentType: 'application/json',
+            })
+            .promise();
+
+        console.log(`Successfully converted and uploaded JSON to bucket: ${outputBucket}, key: ${outputKey}`);
+    } catch (err) {
+        console.error('An error occurred:', err);
+        throw err;
     }
 };
