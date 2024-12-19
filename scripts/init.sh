@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e  # Exit on error
-set -x  # Debug mode
 
 # Variables
 REGION="us-east-1"
@@ -24,7 +23,7 @@ echo "S3 buckets ${IN_BUCKET_NAME} and ${OUT_BUCKET_NAME} created."
 
 # Prepare Lambda function
 echo "Zipping Lambda function..."
-zip -j ${ZIP_FILE} ${LAMBDA_FILE}
+zip -r ${ZIP_FILE} ${LAMBDA_FILE} node_modules
 
 # Create Lambda function
 echo "Creating Lambda function..."
