@@ -9,7 +9,7 @@
 ▌▌▌▌▐▒▄▌░▄▄▄░▐▄▒▌▐▐▐▐
  */
 
-function csvToJson(csv: string): any[] {
+export function csvToJson(csv: string): any[] {
   const lines = csv.split('\n').filter(line => line.trim() !== '');
 
   /*
