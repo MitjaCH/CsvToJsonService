@@ -1,13 +1,24 @@
 #!/bin/bash
 
-# Variables
-REGION="us-east-1"
+# Load YAML Configuration
+CONFIG_FILE="config.yml"
+
+if ! command -v yq &> /dev/null; then
+  echo "yq not found. Please install it: https://github.com/mikefarah/yq"
+  exit 1
+fi
+
+REGION=$(yq '.region' $CONFIG_FILE)
+ROLE_ARN=$(yq '.role_arn' $CONFIG_FILE)
+LAMBDA_FUNCTION_NAME=$(yq '.lambda_function_name' $CONFIG_FILE)
+LAMBDA_HANDLER=$(yq '.lambda_handler' $CONFIG_FILE)
+LAMBDA_RUNTIME=$(yq '.lambda_runtime' $CONFIG_FILE)
+ZIP_FILE=$(yq '.zip_file' $CONFIG_FILE)
+LAMBDA_FILE=$(yq '.lambda_file' $CONFIG_FILE)
+
+# Generate unique bucket names
 IN_BUCKET_NAME="csv-to-json-in-$(date +%s)"
 OUT_BUCKET_NAME="csv-to-json-out-$(date +%s)"
-LAMBDA_FUNCTION_NAME="CsvToJsonConverter"
-ROLE_ARN="arn:aws:iam::474281778567:role/LabRole"
-ZIP_FILE="lambda_function_payload.zip"
-LAMBDA_FILE="dist/index.js"
 
 # Install dependencies and compile TypeScript
 echo "Installing dependencies and compiling TypeScript..."
@@ -28,9 +39,9 @@ zip -r ${ZIP_FILE} ${LAMBDA_FILE} node_modules
 echo "Creating Lambda function..."
 aws lambda create-function \
   --function-name ${LAMBDA_FUNCTION_NAME} \
-  --runtime nodejs18.x \
+  --runtime ${LAMBDA_RUNTIME} \
   --role ${ROLE_ARN} \
-  --handler dist/index.handler \
+  --handler ${LAMBDA_HANDLER} \
   --zip-file fileb://${ZIP_FILE} \
   --region ${REGION} \
   --environment "Variables={INPUT_BUCKET=${IN_BUCKET_NAME},OUTPUT_BUCKET=${OUT_BUCKET_NAME}}"

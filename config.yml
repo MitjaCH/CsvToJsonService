@@ -1,0 +1,7 @@
+region: us-east-1
+role_arn: your-role-arn # CHANGE TO YOUR OWN
+lambda_function_name: your-function-name # CHANGE TO YOUR OWN
+lambda_handler: dist/index.handler
+lambda_runtime: nodejs18.x
+zip_file: lambda_function_payload.zip
+lambda_file: dist/index.js
