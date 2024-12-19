@@ -1,49 +1,56 @@
-/*
- * The actual conversion code, this code can handle multiple types of csv.
- * made by Nils
- 
-▒▒▒▒▒▒▐███████▌▒▒▒▒▒▒
-▒▒▒▒▒▒▐░▀░▀░▀░▌▒▒▒▒▒▒
-▒▒▒▒▒▒▐▄▄▄▄▄▄▄▌▒▒▒▒▒▒
-▄▀▀▀█▒▐░▀▀▄▀▀░▌▒█▀▀▀▄
-▌▌▌▌▐▒▄▌░▄▄▄░▐▄▒▌▐▐▐▐
- */
+import { S3 } from 'aws-sdk';
+import { Context, S3Event } from 'aws-lambda';
 
-export function csvToJson(csv: string): any[] {
-  const lines = csv.split('\n').filter(line => line.trim() !== '');
+export const lambdaHandler = async (event: S3Event, context: Context): Promise<void> => {
+    const s3 = new S3();
 
-  /*
-   * Detect the delimeter so it can handle various types of csv formats f.e.:
-   * name,age,city
-   * name;age;city
-   */
-  const delimiters = [',', ';', '\t'];
-  let delimiter = delimiters.find(d => lines[0].includes(d)) || ',';
+    // Input bucket and key from event
+    const inBucket = event.Records[0].s3.bucket.name;
+    const inKey = event.Records[0].s3.object.key;
 
-  // Detect if there are quotes used in the CSV file f.e.:
-  // "name";"age";"city;
-  const regex = new RegExp(`(?:^|${delimiter})(?:"([^"]*(?:""[^"]*)*)"|([^"${delimiter}]*))`, 'g');
+    // Output bucket from environment variables
+    const outBucket = process.env.OUTPUT_BUCKET;
+    if (!outBucket) {
+        console.error("OUTPUT_BUCKET environment variable is not set.");
+        return;
+    }
 
-  // Parse the header line
-  const headers: string[] = [];
-  lines[0].replace(regex, (_, quoted, unquoted) => {
-    headers.push((quoted || unquoted).trim());
-    return '';
-  });
+    const outKey = inKey.replace(/\\.csv$/, '.json');
 
-  // Parse the remaining lines
-  const json = lines.slice(1).map(line => {
-    const obj: Record<string, string> = {};
-    let i = 0;
+    try {
+        // Download the CSV file
+        const response = await s3.getObject({ Bucket: inBucket, Key: inKey }).promise();
 
-    line.replace(regex, (_, quoted, unquoted) => {
-      obj[headers[i]] = (quoted || unquoted || '').trim();
-      i++;
-      return '';
-    });
+        if (!response.Body) {
+            throw new Error("The S3 object body is empty.");
+        }
 
-    return obj;
-  });
+        const content = response.Body.toString('utf-8');
 
-  return json;
-}
+        // Parse CSV to JSON
+        const rows = content.split('\\n');
+        const headers = rows[0].split(',');
+        const jsonData = rows.slice(1).filter(row => row.trim() !== '').map(row => {
+            const values = row.split(',');
+            return headers.reduce((acc, header, index) => {
+                acc[header.trim()] = values[index].trim();
+                return acc;
+            }, {} as Record<string, string>);
+        });
+
+        // Convert JSON to string
+        const jsonString = JSON.stringify(jsonData);
+
+        // Upload the JSON file
+        await s3.putObject({
+            Bucket: outBucket,
+            Key: outKey,
+            Body: jsonString,
+            ContentType: 'application/json',
+        }).promise();
+
+        console.log(`CSV ${inKey} converted to JSON and uploaded to ${outBucket}/${outKey}`);
+    } catch (error) {
+        console.error(`Error processing file ${inKey} from bucket ${inBucket}:`, error);
+    }
+};

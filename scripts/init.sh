@@ -1,45 +1,46 @@
 #!/bin/bash
-set -e  # Beende das Skript bei Fehlern
-set -x  # Debug-Modus
+set -e  # Exit on error
+set -x  # Debug mode
 
-# Variablen
+# Variables
 REGION="us-east-1"
 IN_BUCKET_NAME="csv-to-json-in-$(date +%s)"
 OUT_BUCKET_NAME="csv-to-json-out-$(date +%s)"
 LAMBDA_FUNCTION_NAME="CsvToJsonConverter"
 ROLE_ARN="arn:aws:iam::474281778567:role/LabRole"
 ZIP_FILE="lambda_function_payload.zip"
-LAMBDA_FILE="lambda_function.ts"
+LAMBDA_FILE="dist/index.js"
 
-# S3-Buckets erstellen
-echo "Erstelle S3-Buckets..."
+# Install dependencies and compile TypeScript
+echo "Installing dependencies and compiling TypeScript..."
+npm install
+npx tsc
+
+# Create S3 buckets
+echo "Creating S3 buckets..."
 aws s3 mb "s3://${IN_BUCKET_NAME}" --region ${REGION}
 aws s3 mb "s3://${OUT_BUCKET_NAME}" --region ${REGION}
-echo "S3-Buckets ${IN_BUCKET_NAME} und ${OUT_BUCKET_NAME} wurden erstellt."
+echo "S3 buckets ${IN_BUCKET_NAME} and ${OUT_BUCKET_NAME} created."
 
-# Lambda-Funktion vorbereiten
-echo "Bereite Lambda-Funktion vor..."
-cp ../src/index.ts ${LAMBDA_FILE}
-
-# Lambda-Funktion zippen
-echo "Zippe Lambda-Funktion..."
+# Prepare Lambda function
+echo "Zipping Lambda function..."
 zip -j ${ZIP_FILE} ${LAMBDA_FILE}
 
-# Lambda-Funktion erstellen
-echo "Erstelle Lambda-Funktion..."
+# Create Lambda function
+echo "Creating Lambda function..."
 aws lambda create-function \
   --function-name ${LAMBDA_FUNCTION_NAME} \
-  --runtime python3.9 \
+  --runtime nodejs18.x \
   --role ${ROLE_ARN} \
-  --handler lambda_function.lambda_handler \
+  --handler index.lambdaHandler \
   --zip-file fileb://${ZIP_FILE} \
   --region ${REGION} \
   --environment "Variables={OUTPUT_BUCKET=${OUT_BUCKET_NAME}}"
 
-echo "Lambda-Funktion ${LAMBDA_FUNCTION_NAME} wurde erstellt."
+echo "Lambda function ${LAMBDA_FUNCTION_NAME} created."
 
-# Lambda-Berechtigungen für S3 hinzufügen
-echo "Füge Lambda-Berechtigungen für S3 hinzu..."
+# Add Lambda permissions for S3
+echo "Adding Lambda permissions for S3..."
 aws lambda add-permission \
   --function-name ${LAMBDA_FUNCTION_NAME} \
   --principal s3.amazonaws.com \
@@ -48,12 +49,12 @@ aws lambda add-permission \
   --source-arn arn:aws:s3:::${IN_BUCKET_NAME} \
   --source-account 474281778567
 
-# 5 Sekunden warten
-echo "Warte 5 Sekunden..."
+# Wait for permissions to propagate
+echo "Waiting 5 seconds for permissions to propagate..."
 sleep 5
 
-# S3-Trigger hinzufügen
-echo "Füge S3-Trigger hinzu..."
+# Add S3 trigger
+echo "Adding S3 trigger..."
 aws s3api put-bucket-notification-configuration --bucket ${IN_BUCKET_NAME} --notification-configuration "{
   \"LambdaFunctionConfigurations\": [
     {
@@ -63,8 +64,7 @@ aws s3api put-bucket-notification-configuration --bucket ${IN_BUCKET_NAME} --not
   ]
 }"
 
-
-echo "Lambda-Trigger hinzugefügt: Uploads in ${IN_BUCKET_NAME} werden automatisch verarbeitet."
-echo "Setup abgeschlossen!"
+echo "Lambda trigger added: Uploads to ${IN_BUCKET_NAME} will be automatically processed."
+echo "Setup complete!"
 echo "In-Bucket: ${IN_BUCKET_NAME}"
 echo "Out-Bucket: ${OUT_BUCKET_NAME}"
