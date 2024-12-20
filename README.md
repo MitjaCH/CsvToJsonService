@@ -1,5 +1,16 @@
 # CsvToJsonConverter
 
+## Projektstruktur
+
+```
+CsvToJsonService/
+├── docs/*               # Tutorials für das einrichten der Voraussetzungen
+├── scripts/init.sh       # Initialisation Skript das die ganze Lambda Funktion auf aws einrichtet
+├── src/index.ts          # Lambda Funktion programmiert in TypeScript
+├── README.md             # Dokumentation
+└── config.yml           # Config Datei zum konfigurieren des init.sh skripts
+```
+
 ## Installation und Setup
 
 Folgen Sie diesen Schritten, um den CsvToJsonConverter in Betrieb zu nehmen:
