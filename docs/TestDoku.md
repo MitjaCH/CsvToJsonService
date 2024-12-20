@@ -64,7 +64,7 @@
 
 - **Gesamtstatus:** Alle Tests erfolgreich bestanden.  
 - **Besondere Vorkommnisse:** Keine.  
-- **Empfohlene Maßnahmen:** Keine weiteren Maßnahmen erforderlich.  
+- **Empfohlene Massnahmen:** Keine weiteren Massnahmen erforderlich.  
 
 --- 
 
