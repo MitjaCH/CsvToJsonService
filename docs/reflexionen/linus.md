@@ -6,16 +6,16 @@
 Das Projekt hat mir insgesamt sehr gut gefallen, und es gab mehrere Bereiche, die ich als besonders positiv empfand. 
 
 1. **Verwendung von virtuellen Maschinen (VMs):**
-   - Das Arbeiten mit virtuellen Maschinen war eine wertvolle Erfahrung. Durch den Einsatz von VMs konnten wir isolierte Umgebungen für verschiedene Tests und Experimente schaffen. Diese Flexibilität erleichterte das Testen und Troubleshooting und ermöglichte es, verschiedene Konfigurationen ohne Risiko für das Hauptsystem auszuprobieren.
+   - Das Arbeiten mit virtuellen Maschinen war eine wertvolle Erfahrung. Ich hatte schon Erfahrung druch die ZBW und konnte mein Wissen schon ein wenig anwenden. Obwohl ich zuhause zum Dokumentieren VirtualBox verwendet habe wo ich noch wenig wissen hatte.
 
 2. **Arbeit mit der Bash-Shell:**
    - Die Verwendung der Bash-Shell hat mir sehr gefallen, da sie eine einfache und mächtige Möglichkeit bietet, wiederkehrende Aufgaben zu automatisieren. Durch die Bash konnte ich Skripte schreiben, die verschiedene Prozesse effizienter gestalteten und die Arbeit insgesamt beschleunigten. Es war auch eine gute Gelegenheit, meine Kenntnisse in Shell-Scripting zu vertiefen.
 
 3. **Zusammenarbeit im Team:**
-   - Die Teamarbeit war sehr positiv. Die Aufgabenverteilung war gut organisiert, sodass jeder die Möglichkeit hatte, an den für ihn interessanten und passenden Aufgaben zu arbeiten. Dabei war die Kommunikation stets offen und konstruktiv. Wir konnten jederzeit auf die Hilfe der anderen zählen, was zu einem sehr angenehmen Arbeitsumfeld beitrug.
-
+   - Die Teamarbeit war sehr positiv. Die Aufgabenverteilung war gut organisiert, sodass jeder die Möglichkeit hatte, an den für ihn interessanten und passenden Aufgaben zu arbeiten.
+     
 4. **Auseinandersetzung mit AWS CLI und Linux:**
-   - Ein weiterer Höhepunkt war die intensive Auseinandersetzung mit der AWS CLI und Linux. Das Arbeiten mit der Cloud über die Kommandozeile war eine wertvolle Erfahrung, da es mir ermöglichte, tiefere Einblicke in Cloud-Technologien zu gewinnen. Das Automatisieren von Prozessen und das Verwalten von Cloud-Ressourcen über die Kommandozeile haben mein Verständnis für die Arbeit mit AWS und Linux deutlich erweitert.
+   - Ein weiterer Höhepunkt war die intensive Auseinandersetzung mit der AWS CLI und Linux. Das Arbeiten mit der Cloud über die Kommandozeile war eine wertvolle Erfahrung, da es mir ermöglichte, tiefere Einblicke in Cloud zu gewinnen.
 
 5. **Effiziente Arbeitsaufteilung:**
    - Die Arbeitsaufteilung innerhalb des Teams war gut durchdacht. Jeder hatte klare Aufgaben, und wir konnten sicherstellen, dass alle Bereiche des Projekts abgedeckt waren. Dies führte zu einer reibungslosen Durchführung der Aufgaben und half uns, das Projekt im Zeitrahmen abzuschließen.
@@ -39,3 +39,4 @@ Alles in allem war dieses Projekt eine sehr wertvolle und lehrreiche Erfahrung. 
 
 Ich freue mich auf zukünftige Projekte, in denen ich diese gewonnenen Erkenntnisse weiter anwenden und vertiefen kann. Durch die Reflexion dieses Projekts konnte ich wichtige Schlüsse ziehen, die mir bei der Umsetzung zukünftiger Aufgaben helfen werden.
 
+---
