@@ -24,6 +24,10 @@ OUT_BUCKET_NAME="csv-to-json-out-$(date +%s)"
 # Install dependencies and compile TypeScript
 echo "Installing dependencies and compiling TypeScript..."
 npm install
+
+# Seperately install the aws-sdk because we've experienced issues with it before
+npm install --save-dev @types/aws-sdk
+
 npx tsc
 
 # Create S3 buckets
