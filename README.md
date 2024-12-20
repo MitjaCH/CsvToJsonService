@@ -16,11 +16,10 @@ CsvToJsonService/
 Folgen Sie diesen Schritten, um den CsvToJsonConverter in Betrieb zu nehmen:
 
 ### Voraussetzungen
-
-- **AWS CLI**:
-  - Installieren, konfigurieren und authentifizieren Sie die AWS CLI. Eine Anleitung finden Sie [hier](docs/aws-cli-setup.md).
 - **Linux-Umgebung**:
   - Verwenden Sie WSL (Windows Subsystem for Linux) oder eine Linux-VM. Eine Anleitung zur Installation finden Sie [hier](docs/wsl-installation.md).
+- **AWS CLI**:
+  - Installieren, konfigurieren und authentifizieren Sie die AWS CLI. Eine Anleitung finden Sie [hier](docs/aws-cli-setup.md).
 - **Git**:
   - Installieren Sie Git auf Ihrem System.
 - **Node.js**:
