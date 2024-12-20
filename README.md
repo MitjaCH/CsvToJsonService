@@ -41,6 +41,26 @@ Installieren Sie zusätzlich die folgende Werkzeuge:
 sudo apt install zip
 sudo apt install -y jq
 ```
+
+### Infrastruktur einrichten
+
+Um die erforderliche Infrastruktur für den Service einzurichten, führen Sie im Verzeichnis ``CsvToJsonConverter`` das folgende Skript aus:
+
+```bash
+bash ./scripts/init.sh
+```
+**Ergebnis**
+Nach der erfolgreichen Ausführung des Skripts werden folgende AWS-Ressourcen erstellt:
+1. **Zwei S3 Buckets:**
+    - Einer der Buckets dient zum Hochladen von CSV-Dateien.
+    - Der zweite Bucket speichert die daraus generierten JSON-Dateien.
+2. **Eine Lambda-Funktion:**
+    - Diese Funktion verarbeitet die in den ersten S3 Bucket hochgeladenen CSV-Dateien und konvertiert sie in JSON der code für dieser funktion finden Sie in ``CsvToJsonConverter/src/index.ts``
+3. **Ein S3-Trigger:**
+    - Der Trigger aktiviert die Lambda-Funktion automatisch, sobald eine neue CSV-Datei im ersten Bucket hochgeladen wird.
+
+Diese Ressourcen arbeiten zusammen, um die hochgeladene CSV-Dateien zu verarbeiten und die Ergebnisse in den Ziel-Bucket zu speichern
+
 ---
 
 ### GitHub Accounts
