@@ -84,6 +84,14 @@ Mit der AWS Command Line Interface (CLI) können Sie AWS-Dienste über die Komma
      ```
 
    - Ersetzen Sie den bestehenden Inhalt durch die zuvor kopierten Zugangsdaten von AWS Academy.
+   - Um diese Zugangsdaten zu erhalten navigieren Sie auf ihre AWS Academy Lab übersicht.
+   - Drücken Sie auf **AWS Details** und drücken Sie auf **Show** unter **AWS CLI**.
+     ![image](https://github.com/user-attachments/assets/279994f6-d3b8-49bc-91cb-4133f86ddbb4)
+    - Kopieren Sie jetzt den ganzen Inhalt vom blau markierten Feld in die **Credentials** File.
+    - ![image](https://github.com/user-attachments/assets/67a3150e-abe5-4655-9a1a-60f608d6adac)
+
+
+     
 
 5. Speichern Sie die Datei und schliessen Sie den Editor. Ihre AWS CLI ist jetzt korrekt konfiguriert.
 
