@@ -3,7 +3,7 @@
 
 ## Positive Aspekte
 
-Das Projekt hat mir insgesamt sehr gut gefallen, und es gab mehrere Bereiche, die ich als besonders positiv empfand. Hier eine detaillierte Auflistung der positiven Aspekte:
+Das Projekt hat mir insgesamt sehr gut gefallen, und es gab mehrere Bereiche, die ich als besonders positiv empfand. 
 
 1. **Verwendung von virtuellen Maschinen (VMs):**
    - Das Arbeiten mit virtuellen Maschinen war eine wertvolle Erfahrung. Durch den Einsatz von VMs konnten wir isolierte Umgebungen für verschiedene Tests und Experimente schaffen. Diese Flexibilität erleichterte das Testen und Troubleshooting und ermöglichte es, verschiedene Konfigurationen ohne Risiko für das Hauptsystem auszuprobieren.
@@ -32,4 +32,10 @@ Trotz der vielen positiven Aspekte gibt es auch einige Punkte, bei denen Verbess
 
 3. **Dokumentation und Wissensweitergabe:**
    - In einigen Fällen war es schwierig, Informationen zu finden oder Entscheidungen nachzuvollziehen, die in früheren Phasen des Projekts getroffen wurden. Eine detailliertere und kontinuierlich aktualisierte Dokumentation des Fortschritts und der technischen Entscheidungen wäre hilfreich gewesen. Besonders in einem Teamprojekt ist es wichtig, dass alle Mitglieder Zugang zu allen relevanten Informationen haben, um Missverständnisse zu vermeiden und die Effizienz zu steigern.
+
+## Fazit
+
+Alles in allem war dieses Projekt eine sehr wertvolle und lehrreiche Erfahrung. Die positiven Aspekte, wie die Arbeit mit VMs, Bash-Scripting, AWS CLI und die gute Zusammenarbeit im Team, haben mein technisches Wissen erweitert und meine Fähigkeiten in der Teamarbeit gestärkt. Die Verbesserungsvorschläge, wie die genauere Definition von Testfällen und eine detailliertere Planung zu Beginn, würden das nächste Projekt noch effizienter machen.
+
+Ich freue mich auf zukünftige Projekte, in denen ich diese gewonnenen Erkenntnisse weiter anwenden und vertiefen kann. Durch die Reflexion dieses Projekts konnte ich wichtige Schlüsse ziehen, die mir bei der Umsetzung zukünftiger Aufgaben helfen werden.
 
