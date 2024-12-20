@@ -11,6 +11,17 @@ CsvToJsonService/
 └── config.yml           # Config Datei zum konfigurieren des init.sh skripts
 ```
 
+## Genutzte NodeJS Dependencies
+| **Dependency**       | **Version** |
+|-----------------------|-------------|
+| `@types/node`        | ^22.10.1    |
+| `aws-sdk`            | ^2.1692.0   |
+| `csvtojson`          | ^2.0.10     |
+| `ts-node`            | ^10.9.2     |
+| `typescript`         | ^5.7.2      |
+| `@types/aws-lambda`  | ^8.10.146   |
+| `@types/aws-sdk`     | ^0.0.42     |
+
 ## Installation und Setup
 
 Folgen Sie diesen Schritten, um den CsvToJsonConverter in Betrieb zu nehmen:
