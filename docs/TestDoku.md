@@ -10,6 +10,7 @@
 - **Testumgebung:** Automatisierter Test im init.sh-Skript  
 - **Testziel:** Die Konvertierung einer CSV-Datei zu einer JSON-Datei  
 
+
 ---
 
 ## 2. Testfälle
@@ -41,6 +42,7 @@
 - **Erwartetes Ergebnis:** Die Lambda-Funktion wird erfolgreich erstellt und mit den S3-Buckets verknüpft.  
 - **Tatsächliches Ergebnis:** Erfolgreich.  
 - **Status:** Bestanden  
+[<img width="1691" alt="image" src="https://github.com/CsvT" />](https://github.com/MitjaCH/CsvToJsonService/edit/main/docs/testcases/testcase_1.png)
 
 ---
 
@@ -56,6 +58,7 @@
 - **Erwartetes Ergebnis:** Die CSV-Datei wird erfolgreich in JSON konvertiert und in den Ausgabebucket hochgeladen.  
 - **Tatsächliches Ergebnis:** Erfolgreich.  
 - **Status:** Bestanden  
+[<img width="1691" alt="image" src="https://github.com/CsvT" />](https://github.com/MitjaCH/CsvToJsonService/edit/main/docs/testcases/testcase_2.png)
 
 ---
 
