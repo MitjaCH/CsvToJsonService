@@ -1,39 +1,26 @@
-### **1. Rollen und Aufgabenverteilung**
-#### **A. Entwickler für die Konvertierungslogik (Nils)**
-**Aufgaben:**
-- Entwickelt den Code für die CSV-zu-JSON-Konvertierung in TypeScript.
-- Schreibt die Lambda-Funktion, die in AWS integriert wird.
-- Stellt sicher, dass der Code gut kommentiert ist und Flexibilität bietet
+# CsvToJsonConverter
 
-**Ziele:**
-- Die Konvertierung funktioniert fehlerfrei.
-- Die Lambda-Funktion ist so geschrieben, dass sie sauber und wartbar ist.
+## Installation und Setup
 
----
+Folgen Sie diesen Schritten, um den CsvToJsonConverter in Betrieb zu nehmen:
 
-#### **B. AWS-Integration und Automatisierung (Mitja)**
-**Aufgaben:**
-- Erstellt und konfiguriert die AWS-S3-Buckets (Input und Output).
-- Bindet die Lambda-Funktion an den Input-Bucket und testet die Trigger.
-- Entwickelt ein CLI-Installationsskript (`init.sh` und ein PowerShell-Skript), das alle AWS-Komponenten automatisiert einrichtet.
+### Voraussetzungen
 
-**Ziele:**
-- Die AWS-Komponenten sind korrekt konfiguriert und automatisiert.
-- Die CLI-Skripte funktionieren fehlerfrei und sind leicht verständlich.
+- **AWS CLI**:
+  - Installieren, konfigurieren und authentifizieren Sie die AWS CLI. Eine Anleitung finden Sie [hier](docs/aws-cli-setup.md).
+- **Linux-Umgebung**:
+  - Verwenden Sie WSL (Windows Subsystem for Linux) oder eine Linux-VM. Eine Anleitung zur Installation finden Sie [hier](docs/linux-environment-setup.md).
+- **Git**:
+  - Installieren Sie Git auf Ihrem System.
 
----
+### 1. Repository klonen
 
-#### **C. Dokumentation und Tests (Linus)**
-**Aufgaben:**
-- Schreibt die Markdown-Dokumentation:
-  - Projektbeschreibung, Installation, Nutzung des Services.
-  - Testprotokolle mit Screenshots und Fazit.
-  - Persönliche Reflexion.
-- Führt Tests durch, erstellt verschiedene CSV-Testdateien und dokumentiert die Ergebnisse (inkl. JSON-Ausgabe).
+Klonen Sie das Projekt-Repository auf Ihr lokales System:
 
-**Ziele:**
-- Die Dokumentation ist übersichtlich, gut strukturiert und prägnant.
-- Die Tests sind vollständig dokumentiert und beweisen die Zuverlässigkeit des Services.
+```bash
+git clone https://github.com/MitjaCH/CsvToJsonService.git
+```
+
 
 ### GitHub Accounts
 - Nils: https://github.com/PythonIschKeiProgrammiersproch
